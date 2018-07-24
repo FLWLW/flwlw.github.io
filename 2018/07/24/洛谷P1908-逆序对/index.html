@@ -10,7 +10,7 @@
     
     
     
-    <title>tags: 分治 | FLWLW</title>
+    <title>洛谷P1908 逆序对 | FLWLW</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -162,19 +162,38 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-tag">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="http://yoursite.com">FLWLW</a>
         >
-        <span>标签</span>
+        <span>洛谷P1908 逆序对</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/分治/index.html">分治</a>
+                <a href="/2018/07/24/洛谷P1908-逆序对/">洛谷P1908 逆序对</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/排序/">排序</a>, 
+                
+                <a href="/tags/二分/">二分</a>, 
+                
+                <a href="/tags/递归/">递归</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-07-24
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -182,21 +201,57 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/分治/index.html">分治</a>
+                    <a href="/2018/07/24/洛谷P1908-逆序对/">洛谷P1908 逆序对</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-07-24
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/排序/">排序</a>, 
+                
+                <a href="/tags/二分/">二分</a>, 
+                
+                <a href="/tags/递归/">递归</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2018/07/24/分治/">分治初解</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <p>这道题我使用的是归并排序， 而且只在归并排序上加一句话即可</p>
+<p>题目：<a href="https://www.luogu.org/problemnew/show/P1908" target="_blank" rel="noopener">逆序对</a></p>
+<p>先来回忆一下归并排序的原理：</p>
+<p>有数列：2 7 5 4 9 8 6</p>
+<p>利用归并排序：</p>
+<p>先二分：</p>
+<p>2 7 5 4          9 8 6</p>
+<p>再分开排序：</p>
+<p>2 4 5 7          6 8 9</p>
+<p>取第一个数列第一个数与第二个数列第一个数进行比较，取较小的一个数加入一个临时数组，而后删除这个数：</p>
+<p>4 5 7             6 8 9</p>
+<p>重复以上步骤得：</p>
+<p>​                     8 9</p>
+<p>会发现此时第二个数组还有两数，而第一个数列已被弹空，此时就直接将第二个数列的所有剩下的加入临时数组，最后再将临时数组里的数一一赋值给原数组</p>
+<p>回到“取第一个数列第一个数与第二个数列第一个数进行比较，取较小的一个数加入一个临时数组，而后删除这个数”这一步：</p>
+<p>​    4 5 6          6 8 9</p>
+<p>2</p>
+<p>想想逆序对定义：</p>
+<p>逆序对就是序列中ai &gt; aj且i &lt; j的有序对 </p>
+<p>那么如果2比在6前且2比6小，所以2便能与6组成一对逆序对，而由于第二个数列已经排序好， 所以6后的数一定大于6， 于是后面的数8 9也一定能与2组成逆序对</p>
+<p>其他同理（自己试试其他数）</p>
+<p>所以当归并排序完后， 逆序对也求出来了</p>
+<p>代码实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long<span class="comment">//将 long long 用 ll 替换 </span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line">ll a[<span class="number">1000001</span>], b[<span class="number">1000001</span>], n, ans;<span class="comment">// a为原数组，b为临时数组 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergesort</span><span class="params">(ll l, ll r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l &gt;= r) <span class="keyword">return</span> ;<span class="comment">//停止条件 </span></span><br><span class="line">	ll m = l + (r - l) / <span class="number">2</span>;<span class="comment">//二分，m = l + (r - l) / 2 和 m = (l + r) / 2 是一样的，这里为防止溢出 </span></span><br><span class="line">	mergesort(l, m);<span class="comment">//递归左边 </span></span><br><span class="line">	mergesort(m + <span class="number">1</span>, r);<span class="comment">//递归右边 </span></span><br><span class="line">	ll l1 = l;<span class="comment">//第一个数列指针 </span></span><br><span class="line">	ll l2 = m + <span class="number">1</span>;<span class="comment">//第二个数列指针 </span></span><br><span class="line">	ll lb = l;<span class="comment">//临时数组指针 </span></span><br><span class="line">	<span class="keyword">while</span>(l1 &lt;= m || l2 &lt;= r) &#123;</span><br><span class="line">		<span class="keyword">if</span>(l1 &gt; m) &#123;b[lb ++] = a[l2]; l2 ++;&#125;<span class="comment">//第一个数列走完时 </span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(l2 &gt; r) &#123;b[lb ++] = a[l1]; l1 ++;&#125;<span class="comment">//第二个数列走完时 </span></span><br><span class="line">		<span class="keyword">else</span> &#123;<span class="comment">//第一个数列和第二个数列都有数时 </span></span><br><span class="line">			<span class="keyword">if</span>(a[l1] &lt; a[l2]) &#123;b[lb ++] = a[l1]; l1 ++;&#125;<span class="comment">//第一个数列第一个数小于第二个数列第一个数时 </span></span><br><span class="line">			<span class="keyword">else</span> &#123;b[lb ++] = a[l2]; l2 ++; ans += m - l1 + <span class="number">1</span>;<span class="comment">/*此处为加上的一句求逆序对个数*/</span>&#125;<span class="comment">//第一个数列第一个数大于第二个数列第一个数时</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = l; i &lt;= r; i ++) &#123;</span><br><span class="line">		a[i] = b[i];<span class="comment">//赋值回去 </span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	mergesort(<span class="number">1</span>, n);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans ; </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -324,25 +379,25 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/tags/分治/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/07/24/洛谷P1908-逆序对/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/tags/分治/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/07/24/洛谷P1908-逆序对/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/tags/分治/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/07/24/洛谷P1908-逆序对/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/分治/" style="font-size: 14.188008190172486px;" class="tag-cloud-link">分治</a>
+    <a href="/tags/分治/" style="font-size: 15.004067439098568px;" class="tag-cloud-link">分治</a>
     
-    <a href="/tags/排序/" style="font-size: 13.215513109894136px;" class="tag-cloud-link">排序</a>
+    <a href="/tags/排序/" style="font-size: 12.301830139363066px;" class="tag-cloud-link">排序</a>
     
-    <a href="/tags/二分/" style="font-size: 14.298928987057549px;" class="tag-cloud-link">二分</a>
+    <a href="/tags/二分/" style="font-size: 9.016989867508155px;" class="tag-cloud-link">二分</a>
     
-    <a href="/tags/递归/" style="font-size: 16.810833838778905px;" class="tag-cloud-link">递归</a>
+    <a href="/tags/递归/" style="font-size: 13.394421178025592px;" class="tag-cloud-link">递归</a>
     
 </div>
                 <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
