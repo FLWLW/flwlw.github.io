@@ -10,7 +10,7 @@
     
     
     
-    <title>archive_a | FLWLW</title>
+    <title>分治初解 | FLWLW</title>
     <link href=”http://yoursite.com“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -95,7 +95,7 @@
                 
                 
                 
-                <li class="current">
+                <li class="">
                     <a href="/archives">
                         <i class="fa fa-archive"></i>归档
                     </a>
@@ -150,19 +150,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-archive">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="http://yoursite.com">FLWLW</a>
         >
-        <span>归档</span>
+        <span>分治初解</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/archives">归档</a>
+                <a href="/2018/07/24/分治/">分治初解</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/分治/">分治</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-07-24
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -170,31 +185,32 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/archives">归档</a>
+                    <a href="/2018/07/24/分治/">分治初解</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-07-24
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/分治/">分治</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        
-        
-            <h1 style="font-size: 24px; margin-top: 40px;">2018年</h1>
-            
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-             
-             
-                        <a href="/2018/07/24/分治/">分治初解</a>
-                        <br>
-            
-             
-                        <a href="/2018/07/21/hello-world/">Hello World</a>
-                        <br>
-            
-                    </div>
-        
+    <div class="content-article">
+        <p>分治是一种基于二分的解题思路<br>分治字面理解即为分开治理<br>以题目最大子段和为例子<br>(题目：<a href="https://www.luogu.org/problemnew/show/P1115" target="_blank" rel="noopener">最大子段和</a>)<br>(PS：请先看题)<br>题目样例：<br>7<br>2 -4 3 -1 2 -4 3<br>用分治思想来看<br>我们需要先把这个数列二分一下<br>得到：<br>2 -4 3 -1  和  2 -4 3<br>接着分别从两个新数列的开头向后走<br>第一个数列从-1开始向左走，每次更新最大值（左边情况）<br>第二个数列从2开始向右走（右边情况）<br>将第一个数列和第二个数列的最大值加起来得到中间向两边找的情况，且必定为最优的可能答案（想想为什么）</p>
+<p>代码实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long<span class="comment">//把long long 用 ll 代替 </span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">0x7fffffff</span>;<span class="comment">//设定最大值，应为有负数 </span></span><br><span class="line"></span><br><span class="line">ll a[<span class="number">1000001</span>], ans = -INF, n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">zdh</span><span class="params">(ll l, ll r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l &gt;= r) <span class="keyword">return</span>;</span><br><span class="line">	ll m = l + (r -l) / <span class="number">2</span>;<span class="comment">//二分 </span></span><br><span class="line">	zdh(l, m);<span class="comment">//递归左边 </span></span><br><span class="line">	zdh(m + <span class="number">1</span>, r);<span class="comment">//递归右边 </span></span><br><span class="line">	ll a1 = <span class="number">0</span>, a2 = <span class="number">0</span>, ans1 = -INF, ans2 = -INF;<span class="comment">//a1, a2求和， ans1, ans2更新答案 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = m; i &gt;= l; i --) &#123;<span class="comment">//向左找 </span></span><br><span class="line">		a1 += a[i];<span class="comment">//加起来 </span></span><br><span class="line">		ans1 = max(a1, ans1);<span class="comment">//更新 </span></span><br><span class="line">		ans = max(ans, ans1);<span class="comment">//更新最后答案 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j = m + <span class="number">1</span>; j &lt;= r; j ++) &#123;<span class="comment">//向右找 </span></span><br><span class="line">		a2 += a[j];</span><br><span class="line">		ans2 = max(a2, ans2);</span><br><span class="line">		ans = max(ans, ans2);</span><br><span class="line">	&#125;</span><br><span class="line">	ans = max(ans1 + ans2, ans);<span class="comment">//更新中间情况 </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">	&#125;	</span><br><span class="line">	zdh(<span class="number">1</span>, n);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans ;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -298,19 +314,19 @@
         <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
             <ul class="nav nav-pills pills-gal">
                 <li class="">
-                    <a href="/archives/2018/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2018/07/24/分治/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 <li class="">
-                    <a href="/archives/2018/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2018/07/24/分治/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 <li class="">
-                    <a href="/archives/2018/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/07/24/分治/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/分治/" style="font-size: 18.01822694139762px;" class="tag-cloud-link">分治</a>
+    <a href="/tags/分治/" style="font-size: 17.006003520117527px;" class="tag-cloud-link">分治</a>
     
 </div>
                 <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
